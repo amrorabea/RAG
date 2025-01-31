@@ -17,3 +17,8 @@ $ conda create -n rag python=3.8
 ```bash
 $ conda activate rag
 ```
+
+## For better command line interface
+```bash
+export PS1="\[\033[01;32m\]\u@\h:\w\n\[\033[00m\]\$ "
+```
