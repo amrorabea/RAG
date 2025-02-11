@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, validator
 from typing import Optional
-from bson.objectid import ObjectId
+from bson import ObjectId
 
 class Project(BaseModel):
     _id: Optional[ObjectId]
@@ -9,9 +9,8 @@ class Project(BaseModel):
     @validator('project_id')
     def validate_project_id(cls, value):
         if not value.isalnum():
-            raise ValueError("porject_id must be alphanumeric")
-        
+            raise ValueError("project_id must be alphanumeric")
         return value
-    
+
     class Config:
-        arbitary_types_allowed = True
+        arbitrary_types_allowed = True
