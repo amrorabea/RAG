@@ -7,7 +7,6 @@ from helpers.config import get_settings
 from stores.llm.LLMProviderFactory import LLMProviderFactory
 from stores.vectordb.VectorDBProviderFactory import VectorDBProviderFactory
 from stores.llm.templates.template_parser import TemplateParser
-import os
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -43,9 +42,6 @@ async def startup_span():
         language=settings.PRIMARY_LANG,
         default_language=settings.DEFAULT_LANG,
     )
-
-    CHAT_LOGS_DIR = "chat_logs"
-    os.makedirs(CHAT_LOGS_DIR, exist_ok=True)
 
 async def shutdown_span():
     app.mongo_conn.close()
