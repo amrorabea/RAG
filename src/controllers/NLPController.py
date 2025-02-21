@@ -3,6 +3,8 @@ from models.db_schemes import Project, DataChunk
 from stores.llm.LLMEnums import DocumentTypeEnum
 from typing import List
 import json
+import os
+from datetime import datetime
 
 class NLPController(BaseController):
 
@@ -114,7 +116,8 @@ class NLPController(BaseController):
         ])
 
         footer_prompt = self.template_parser.get(
-            "rag", "footer_prompt"
+            "rag", "footer_prompt",
+            {"query": query}
         )
 
         chat_history = [
@@ -130,5 +133,11 @@ class NLPController(BaseController):
             prompt=full_prompt,
             chat_history=chat_history
         )
+
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        filename = f"chat_history_{timestamp}.txt"
+
+        with open(f"chat_logs/{filename}", "a", encoding="utf-8") as file:
+            file.write(f"Q: {query}\nA: {answer}\n\n")
 
         return answer, full_prompt, chat_history
